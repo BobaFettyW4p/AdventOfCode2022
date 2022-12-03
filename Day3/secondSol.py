@@ -74,8 +74,9 @@ if __name__ == '__main__':
     import_rucksack_contents()
     #divide_into_compartments(rucksacks)
     #print(f'The elves have a total priority of {find_common_item(divided_rucksacks)}, that\'s a lot of toys!')
+    create_safety_groups(rucksacks, safety_groups)
     if len(rucksacks)/3 == len(safety_groups):
         print(f'every elf has their buddies, feel free to proceed')
+        print(f'Since everyone is safe, the total value of their badges is {find_safety_group_badges(safety_groups)}')
     else:
         print(f'something\'s not right, double check your safety groups to prevent danger!')
-    print(f'Since everyone is safe, the total value of their badges is {find_safety_group_badges(safety_groups)}')

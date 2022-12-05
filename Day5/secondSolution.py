@@ -59,12 +59,12 @@ def importInstructions():
 def processInstructions(stacks,instructions):
     for instruction in instructions:
         iterations, firstStack, finalStack = instruction[0], instruction[1], instruction[2]
+        #buffer variable is used to store all the boxes that are moved at once due to the higher power crane
         buffer = deque()
         for i in range(0,int(iterations)):
             buffer.appendleft(stacks[firstStack].pop())
         while len(buffer) > 0:
             stacks[finalStack].append(buffer.popleft())
-        
     finalString = ''
     for key in stacks.keys():
         finalString+=stacks[key].pop()

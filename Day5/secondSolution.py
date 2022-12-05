@@ -39,6 +39,8 @@ def importInstructions():
             instruction = instruction.replace('move', '')
             instruction = instruction.replace('from','')
             instruction = instruction.replace('to','')
+            #this loop is needed to capture numbers of 2 digits (or greater)
+            #otherwise, 11 would be represented as 2 (1+1)
             for character in instruction:
                 if character.isdigit():
                     digitCapture+=f'{character}'

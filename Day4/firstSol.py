@@ -33,6 +33,6 @@ def test(list):
 if __name__ == '__main__':
     pairs =[]
     pairs = import_data(pairs)
-    print(find_subsets(pairs))
+    print(find_subsets(pairs)) #450
     #prifind_subsets(pairs)
     #print(test([4,4,3,34]))

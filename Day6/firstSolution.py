@@ -16,4 +16,4 @@ def  interpretSignal(radioSignal):
 
 if __name__ == '__main__':
     radioSignal = inputData()
-    print(f'Signal Analysis complete. First stack of packet marker is at {interpretSignal(radioSignal)}')
+    print(f'Signal Analysis complete. First stack of packet marker is at {interpretSignal(radioSignal)}') # 1542

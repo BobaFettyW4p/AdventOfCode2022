@@ -1,10 +1,7 @@
 def import_data():
-    with open('test.txt','r') as f:
+    with open('input.txt','r') as f:
         content = f.readlines()
-        returnLess = []
-        for line in content:
-            returnLess.append(line[:-1])
-        return returnLess
+        return [x[:-1] for x in content]
 
 def parse_data(data):
     directories = {}
@@ -12,18 +9,18 @@ def parse_data(data):
     pwd = ''
     for line in data:
         if line[0]=='$':
-            print(f'parsing command {line}')
             pwd = parse_command(line, pwd, directories, files_within)
         elif line[:3] == 'dir':
-            #print(f'directory {line[4:]} is contained within {pwd}')
             directories[pwd].append(f'{pwd}/{line[4:]}')
         else:
             total_size = ''
             for character in line:
-                if character.isdigit():
+                if character != ' ':
                     total_size=f'{total_size}{character}'
-            #print(f'adding a file of size {total_size} to {pwd}')
-            files_within[pwd]+=int(total_size)
+                else:
+                    total_size = int(total_size)
+                    files_within[pwd]+=int(total_size)
+                    break
     return directories, files_within
 
                 
@@ -37,7 +34,6 @@ def parse_command(line, pwd, directories, files_within):
             if pwd not in directories.keys():
                 directories[pwd] = []
                 files_within[pwd] = 0
-    print(f'working directory {pwd}')
     return pwd
 
 def find_parent_folder(pwd, directories):
@@ -45,11 +41,11 @@ def find_parent_folder(pwd, directories):
         for value in values:
             if pwd == value:
                 return key
-    return '/'
+    return ''
 
 def get_total_folder_size(directories, files_within):
     total_folder_size = {}
-    for key, values in directories.items():
+    for key, values in sorted(directories.items(), reverse=True):
         totalSum = 0
         for value in values:
             totalSum += files_within[value]
@@ -60,8 +56,8 @@ def get_total_folder_size(directories, files_within):
 
 def find_sufficiently_small_folders(files_within):
     solution = 0
-    for key in files_within.keys():
-        print(f'file location is {key}; value is {files_within[key]}. added to answer: {100000 >= files_within[key]}')
+    for key in sorted(files_within.keys(), reverse=True):
+        #print(f'checking directory {key}: size {files_within[key]}')
         if files_within[key] <= 100000:
             solution+= files_within[key]
             #print(f'add {key} with value {files_within[key]} to solution. running total: {solution}')
@@ -74,16 +70,6 @@ if __name__ == "__main__":
     #print(f'directory tree is {directories}, directory sizes are {files_within}')
     #files_within = get_total_folder_size(directories, files_within)
     #print(files_within)
-    print(f'files within is {files_within}')
-    print('''
-
-
-
-
-
-
-
-          ''')
-    print(f'directories are {directories}')
+    print(files_within)
     files_within = get_total_folder_size(directories, files_within)
     print(find_sufficiently_small_folders(files_within))
